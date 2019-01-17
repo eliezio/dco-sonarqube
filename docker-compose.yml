@@ -1,0 +1,29 @@
+version: "3"
+
+services:
+  sonarqube:
+    image: sonarqube:7.5-community
+    restart: always
+    ports:
+      - "9000:9000"
+    environment:
+      - SONARQUBE_JDBC_URL=jdbc:postgresql://db:5432/sonar
+    volumes:
+      - /srv/docker/sonarqube/data:/opt/sonarqube/data
+      - /srv/docker/sonarqube/logs:/opt/sonarqube/logs
+      - /srv/docker/sonarqube/extensions:/opt/sonarqube/extensions
+
+  db:
+    image: sameersbn/postgresql:10-1
+    restart: always
+    environment:
+      - PG_TRUST_LOCALNET=true
+      - DB_USER=sonar
+      - DB_PASS=sonar
+      - DB_NAME=sonar
+      - DB_EXTENSION=pg_trgm
+    volumes:
+      - /srv/docker/sonarqube/postgresql:/var/lib/postgresql
+      # This needs explicit mapping due to
+      # https://github.com/docker-library/postgres/blob/4e48e3228a30763913ece952c611e5e9b95c8759/Dockerfile.template#L52
+      - /srv/docker/sonarqube/postgresql_data:/var/lib/postgresql/data
