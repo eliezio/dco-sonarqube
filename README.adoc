@@ -1,0 +1,15 @@
+= SonarQube via DockerCompose
+Eliézio Oliveira;
+:doctype: article
+:icons: font
+:source-highlighter: highlightjs
+:sectlinks:
+
+== Intro
+
+This is a simple Docker Compose setup to run a SonarQube instance locally.
+
+== Running
+
+. Run `sudo ./setup.sh`
+. Run `docker-compose up -d`
